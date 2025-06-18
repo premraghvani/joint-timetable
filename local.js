@@ -10,15 +10,15 @@ const app = express();
 app.use(express.raw({ type: "*/*", limit: "10mb" }));
 
 app.get("/", async function(req, res){
-    const inputDate = convertYMDToDMY(req.query.date) || formatDateToDDMMYYYY(new Date());
-    const data = await weekDetails(inputDate);
-    res.set("Content-Type", "text/html").send(data);
-})
-
-app.get("/term",async function(req,res){
-    const term = req.query.term;
-    const data = await termDetails(term);
-    res.set("Content-Type", "text/html").send(data);
+    if(!!req.query.term){
+        const term = req.query.term;
+        const data = await termDetails(term);
+        res.set("Content-Type", "text/html").send(data);
+    } else {
+        const inputDate = convertYMDToDMY(req.query.date) || formatDateToDDMMYYYY(new Date());
+        const data = await weekDetails(inputDate);
+        res.set("Content-Type", "text/html").send(data);
+    }
 })
 
 // runs

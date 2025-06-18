@@ -15,6 +15,10 @@ This project can work locally, or in AWS Lambda.
 3. `node local.js` to run locally, or just put it in AWS Lambda (connected with API Gateway), pointing to `index.js`. By default, it will run on port  `3030`.
 To change this, please go to line one of `local.js` and change the port - it is common sense where
 
+## AWS Setup
+
+Please refer to [AWS set up docs](aws.md)
+
 # Config
 
 The `config.json` file looks like:

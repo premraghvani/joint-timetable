@@ -20,7 +20,7 @@ async function timetableRetrieve(start, end) {
             // DURHAMIFICATION OF DATA
             if(config.people[person].includes("durham.ac.uk")){
                 for(var i = 0; i < parsedInfo[person].length; i++){
-                    let currentSummary = parsedInfo[person][i].summary
+                    let currentSummary = parsedInfo[person][i].summary ?? "XXXX0000 - WHAT"
                     const moduleCodeMatch = currentSummary.match(/^[A-Z]+\d+/);
                     const typeMatch = currentSummary.match(/-\s*(\w+)/);
                     const moduleCode = moduleCodeMatch ? moduleCodeMatch[0] : '';
