@@ -1,0 +1,11 @@
+{
+  "name": "jointcal",
+  "version": "1.0.0",
+  "description": "Joint calendar for uni or whatever, ICS needed",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Prem Raghvani",
+  "license": "ISC"
+}
