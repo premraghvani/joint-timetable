@@ -42,3 +42,10 @@ As an example, `michaelmas` is the key (so the term name displayed), and we have
 must be in `DD-MM-YYYY`. Note that only Mondays to Fridays are displayed.
 Add rows underneath this `michaelmas` for other terms. **A maximum of 5 terms are permitted. A minimum of 1 term is required**
 
+# Sample
+
+Example (single week)
+![Example of the app](./assets/exampleView.png "Example")
+
+Example (term)
+![Example of the app in terms](./assets/exampleViewTerms.png "Example")

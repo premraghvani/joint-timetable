@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joint Timetable Grid</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 1rem;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      text-align: center;
+      vertical-align: top;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+    .person-0 { background-color: #fce4ec; }
+    .person-1 { background-color: #e3f2fd; }
+    .person-2 { background-color: #e8f5e9; }
+    .person-3 { background-color: #fff3e0; }
+    .person-4 { background-color: #ede7f6; }
+    .person-5 { background-color: #f3e5f5; }
+    .person-6 { background-color: #e0f7fa; }
+    .person-7 { background-color: #f9fbe7; }
+    .person-8 { background-color: #efebe9; }
+    .person-9 { background-color: #fbe9e7; }
+    .event {
+      margin: 2px;
+      padding: 4px;
+      font-size: 0.85em;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Weekly Joint Timetable</h2>
+  <table id="timetable">
+    <thead>
+      <tr>
+        <th>Day</th>
+        <th>Person</th>
+        <script>
+          for (let hour = 9; hour < 18; hour++) {
+            document.write(`<th>${hour}:00</th>`);
+          }
+        </script>
+      </tr>
+    </thead>
+    <tbody id="gridBody"></tbody>
+  </table>
+
+  <script>
+    const rawData = {"prem2":[{"type":"VEVENT","params":[],"uid":"wgwj47_06EDD13AFBE10864F7B74AFCD2BD0D40D/MCS30541","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1597: Probability I - Tutorial","description":"Probability I","location":"D/MCS3054","start":"2024-10-14T09:00:00.000Z","datetype":"date-time","end":"2024-10-14T10:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_DC3F95C83968186FBEE05D6EA8516D5AD/CLC0132","dtstamp":"2025-06-18T18:40:02.000Z","summary":"ECON1011: Principles of Economics - Lecture","description":"Principles of Economics","location":"D/CLC013","start":"2024-10-14T10:00:00.000Z","datetype":"date-time","end":"2024-10-14T11:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_B0E527DAC49ADCE8F2D5C271D2F9F703D/PH82","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1071: Linear Algebra I - Lecture","description":"Linear Algebra I","location":"D/PH8","start":"2024-10-14T11:00:00.000Z","datetype":"date-time","end":"2024-10-14T12:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_06EDD13AFBE10864F7B74AFCD2BD0D14D/CLC0132","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1597: Probability I - Lecture","description":"Probability I","location":"D/CLC013","start":"2024-10-14T14:00:00.000Z","datetype":"date-time","end":"2024-10-14T15:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_D152C22CFDBCFA333608C515C039417ED/TLC0251","dtstamp":"2025-06-18T18:40:02.000Z","summary":"COMP1051: Computational Thinking - Practical","description":"Computational Thinking","location":"D/TLC025","start":"2024-10-15T08:00:00.000Z","datetype":"date-time","end":"2024-10-15T10:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_DC3F95C83968186FBEE05D6EA8516D56D/CLC0132","dtstamp":"2025-06-18T18:40:02.000Z","summary":"ECON1011: Principles of Economics - Lecture","description":"Principles of Economics","location":"D/CLC013","start":"2024-10-15T10:00:00.000Z","datetype":"date-time","end":"2024-10-15T11:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_B0E527DAC49ADCE8F2D5C271D2FA3DEED/PH82","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1061: Calculus I - Lecture","description":"Calculus I","location":"D/PH8","start":"2024-10-15T11:00:00.000Z","datetype":"date-time","end":"2024-10-15T12:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_456D357A13C927840898279B73F41F1AD/CLC407FAC461","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1061: Calculus I - Drop-In Class","description":"Calculus I","location":"D/CLC407","start":"2024-10-16T08:00:00.000Z","datetype":"date-time","end":"2024-10-16T09:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_841CC853E7E61E319BE06AFCCD2418E3D/CLC2022","dtstamp":"2025-06-18T18:40:02.000Z","summary":"COMP1051: Computational Thinking - Lecture","description":"Computational Thinking","location":"D/CLC202","start":"2024-10-16T09:00:00.000Z","datetype":"date-time","end":"2024-10-16T11:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_06EDD13AFBE10864F7B74AFCD2BD0D5ED/CLC0132","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1597: Probability I - Lecture","description":"Probability I","location":"D/CLC013","start":"2024-10-17T08:00:00.000Z","datetype":"date-time","end":"2024-10-17T09:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_B0E527DAC49ADCE8F2D5C271D2FA3DF3D/PH82","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1061: Calculus I - Lecture","description":"Calculus I","location":"D/PH8","start":"2024-10-17T09:00:00.000Z","datetype":"date-time","end":"2024-10-17T10:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_B0E527DAC49ADCE8F2D5C271D2FA4A66D/PH82","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1071: Linear Algebra I - Lecture","description":"Linear Algebra I","location":"D/PH8","start":"2024-10-17T11:00:00.000Z","datetype":"date-time","end":"2024-10-17T12:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_E60C84A784BC3DF060F067DCA1C42FBBD/CLC2022","dtstamp":"2025-06-18T18:40:02.000Z","summary":"COMP1101: Programming (Black) - Lecture","description":"Programming (Black)","location":"D/CLC202","start":"2024-10-17T15:00:00.000Z","datetype":"date-time","end":"2024-10-17T16:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_B0E527DAC49ADCE8F2D5C271D2FA4A6BD/PH82","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1071: Linear Algebra I - Lecture","description":"Linear Algebra I","location":"D/PH8","start":"2024-10-18T09:00:00.000Z","datetype":"date-time","end":"2024-10-18T10:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_D4E6E431F824AB5241BD3A99405E4D76D/D1102","dtstamp":"2025-06-18T18:40:02.000Z","summary":"COMP1101: Programming (Black) - Lecture","description":"Programming (Black)","location":"D/D110","start":"2024-10-18T09:00:00.000Z","datetype":"date-time","end":"2024-10-18T10:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_2DD86839898976E7DF588011462BB52AD/RH-00031","dtstamp":"2025-06-18T18:40:02.000Z","summary":"COMP1101: Programming (Black) - Practical","description":"Programming (Black)","location":"D/RH-0003","start":"2024-10-18T10:00:00.000Z","datetype":"date-time","end":"2024-10-18T12:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_B0E527DAC49ADCE8F2D5C271D2FA3DF8D/CLC2022","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1061: Calculus I - Lecture","description":"Calculus I","location":"D/CLC202","start":"2024-10-18T12:00:00.000Z","datetype":"date-time","end":"2024-10-18T13:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_06EDD13AFBE10864F7B74AFCD2BD0D18D/CLC0132","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1597: Probability I - Lecture","description":"Probability I","location":"D/CLC013","start":"2024-10-18T13:00:00.000Z","datetype":"date-time","end":"2024-10-18T14:00:00.000Z"}],"prem":[{"type":"VEVENT","params":[],"uid":"wgwj47_06EDD13AFBE10864F7B74AFCD2BD0D40D/MCS30541","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1597: Probability I - Tutorial","description":"Probability I","location":"D/MCS3054","start":"2024-10-14T09:00:00.000Z","datetype":"date-time","end":"2024-10-14T10:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_DC3F95C83968186FBEE05D6EA8516D5AD/CLC0132","dtstamp":"2025-06-18T18:40:02.000Z","summary":"ECON1011: Principles of Economics - Lecture","description":"Principles of Economics","location":"D/CLC013","start":"2024-10-14T10:00:00.000Z","datetype":"date-time","end":"2024-10-14T11:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_B0E527DAC49ADCE8F2D5C271D2F9F703D/PH82","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1071: Linear Algebra I - Lecture","description":"Linear Algebra I","location":"D/PH8","start":"2024-10-14T11:00:00.000Z","datetype":"date-time","end":"2024-10-14T12:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_06EDD13AFBE10864F7B74AFCD2BD0D14D/CLC0132","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1597: Probability I - Lecture","description":"Probability I","location":"D/CLC013","start":"2024-10-14T14:00:00.000Z","datetype":"date-time","end":"2024-10-14T15:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_D152C22CFDBCFA333608C515C039417ED/TLC0251","dtstamp":"2025-06-18T18:40:02.000Z","summary":"COMP1051: Computational Thinking - Practical","description":"Computational Thinking","location":"D/TLC025","start":"2024-10-15T08:00:00.000Z","datetype":"date-time","end":"2024-10-15T10:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_DC3F95C83968186FBEE05D6EA8516D56D/CLC0132","dtstamp":"2025-06-18T18:40:02.000Z","summary":"ECON1011: Principles of Economics - Lecture","description":"Principles of Economics","location":"D/CLC013","start":"2024-10-15T10:00:00.000Z","datetype":"date-time","end":"2024-10-15T11:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_B0E527DAC49ADCE8F2D5C271D2FA3DEED/PH82","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1061: Calculus I - Lecture","description":"Calculus I","location":"D/PH8","start":"2024-10-15T11:00:00.000Z","datetype":"date-time","end":"2024-10-15T12:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_456D357A13C927840898279B73F41F1AD/CLC407FAC461","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1061: Calculus I - Drop-In Class","description":"Calculus I","location":"D/CLC407","start":"2024-10-16T08:00:00.000Z","datetype":"date-time","end":"2024-10-16T09:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_841CC853E7E61E319BE06AFCCD2418E3D/CLC2022","dtstamp":"2025-06-18T18:40:02.000Z","summary":"COMP1051: Computational Thinking - Lecture","description":"Computational Thinking","location":"D/CLC202","start":"2024-10-16T09:00:00.000Z","datetype":"date-time","end":"2024-10-16T11:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_06EDD13AFBE10864F7B74AFCD2BD0D5ED/CLC0132","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1597: Probability I - Lecture","description":"Probability I","location":"D/CLC013","start":"2024-10-17T08:00:00.000Z","datetype":"date-time","end":"2024-10-17T09:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_B0E527DAC49ADCE8F2D5C271D2FA3DF3D/PH82","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1061: Calculus I - Lecture","description":"Calculus I","location":"D/PH8","start":"2024-10-17T09:00:00.000Z","datetype":"date-time","end":"2024-10-17T10:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_B0E527DAC49ADCE8F2D5C271D2FA4A66D/PH82","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1071: Linear Algebra I - Lecture","description":"Linear Algebra I","location":"D/PH8","start":"2024-10-17T11:00:00.000Z","datetype":"date-time","end":"2024-10-17T12:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_E60C84A784BC3DF060F067DCA1C42FBBD/CLC2022","dtstamp":"2025-06-18T18:40:02.000Z","summary":"COMP1101: Programming (Black) - Lecture","description":"Programming (Black)","location":"D/CLC202","start":"2024-10-17T15:00:00.000Z","datetype":"date-time","end":"2024-10-17T16:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_B0E527DAC49ADCE8F2D5C271D2FA4A6BD/PH82","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1071: Linear Algebra I - Lecture","description":"Linear Algebra I","location":"D/PH8","start":"2024-10-18T09:00:00.000Z","datetype":"date-time","end":"2024-10-18T10:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_D4E6E431F824AB5241BD3A99405E4D76D/D1102","dtstamp":"2025-06-18T18:40:02.000Z","summary":"COMP1101: Programming (Black) - Lecture","description":"Programming (Black)","location":"D/D110","start":"2024-10-18T09:00:00.000Z","datetype":"date-time","end":"2024-10-18T10:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_2DD86839898976E7DF588011462BB52AD/RH-00031","dtstamp":"2025-06-18T18:40:02.000Z","summary":"COMP1101: Programming (Black) - Practical","description":"Programming (Black)","location":"D/RH-0003","start":"2024-10-18T10:00:00.000Z","datetype":"date-time","end":"2024-10-18T12:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_B0E527DAC49ADCE8F2D5C271D2FA3DF8D/CLC2022","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1061: Calculus I - Lecture","description":"Calculus I","location":"D/CLC202","start":"2024-10-18T12:00:00.000Z","datetype":"date-time","end":"2024-10-18T13:00:00.000Z"},{"type":"VEVENT","params":[],"uid":"wgwj47_06EDD13AFBE10864F7B74AFCD2BD0D18D/CLC0132","dtstamp":"2025-06-18T18:40:02.000Z","summary":"MATH1597: Probability I - Lecture","description":"Probability I","location":"D/CLC013","start":"2024-10-18T13:00:00.000Z","datetype":"date-time","end":"2024-10-18T14:00:00.000Z"}]};
+
+    const people = Object.keys(rawData);
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+
+    const gridBody = document.getElementById("gridBody");
+
+    for (const day of days) {
+      for (let p = 0; p < people.length; p++) {
+        const person = people[p];
+        const row = document.createElement("tr");
+
+        const dayCell = document.createElement("td");
+        dayCell.textContent = p === 0 ? day : "";
+        dayCell.style.fontWeight = p === 0 ? "bold" : "normal";
+        row.appendChild(dayCell);
+
+        const nameCell = document.createElement("td");
+        nameCell.textContent = person;
+        nameCell.style.fontWeight = "bold";
+        row.appendChild(nameCell);
+
+        for (let hour = 9; hour < 18; hour++) {
+          const cell = document.createElement("td");
+
+          const events = rawData[person].filter(ev => {
+            const start = new Date(ev.start);
+            const end = new Date(ev.end);
+            const dayStr = start.toLocaleDateString("en-UK", { weekday: "long", timeZone: "Europe/London" });
+            const startHour = start.toLocaleString("en-UK", { hour: "numeric", hour12: false, timeZone: "Europe/London" });
+            const endHour = end.toLocaleString("en-UK", { hour: "numeric", hour12: false, timeZone: "Europe/London" });
+            return dayStr === day && hour >= parseInt(startHour) && hour < parseInt(endHour);
+          });
+
+          for (const ev of events) {
+            const div = document.createElement("div");
+            div.className = `event person-${p}`;
+            div.textContent = ev.summary;
+            cell.appendChild(div);
+          }
+
+          row.appendChild(cell);
+        }
+        gridBody.appendChild(row);
+      }
+    }
+  </script>
+</body>
+</html>

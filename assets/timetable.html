@@ -1,0 +1,241 @@
+<!--Courtesy of ChatGPT-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joint Timetable Grid</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 1rem;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th,
+    td {
+      text-align: center;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+    }
+
+    td {
+      border-left: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+    }
+
+    .person-0 {
+      background-color: #fce4ec;
+    }
+
+    .person-1 {
+      background-color: #e3f2fd;
+    }
+
+    .person-2 {
+      background-color: #e8f5e9;
+    }
+
+    .person-3 {
+      background-color: #fff3e0;
+    }
+
+    .person-4 {
+      background-color: #ede7f6;
+    }
+
+    .person-5 {
+      background-color: #f3e5f5;
+    }
+
+    .person-6 {
+      background-color: #e0f7fa;
+    }
+
+    .person-7 {
+      background-color: #f9fbe7;
+    }
+
+    .person-8 {
+      background-color: #efebe9;
+    }
+
+    .person-9 {
+      background-color: #fbe9e7;
+    }
+
+    .event {
+      margin: 2px;
+      padding: 4px;
+      font-size: 0.85em;
+      border-radius: 4px;
+    }
+
+    .day-top {
+      border-top: 3px solid black;
+    }
+
+    .day-bottom {
+      border-bottom: 3px solid black;
+    }
+
+    .day-label {
+      border-left: 3px solid black;
+      border-right: 3px solid black;
+      border-top: 3px solid black;
+      border-bottom: 3px solid black;
+      font-weight: bold;
+    }
+
+    .hour-cell {
+      border-left: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+    }
+
+    .header-row th {
+      border: 3px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <h2 class="dontPrint">Joint Timetable Grid</h2>
+  <p>REPLACE_WITH_NOTICE</p>
+  <table id="timetable">
+    <thead>
+      <tr class="header-row">
+        <th>Day</th>
+        <th>Person</th>
+        <script>
+          for (let hour = 9; hour < 18; hour++) {
+            document.write(`<th>${hour}:00</th>`);
+          }
+        </script>
+      </tr>
+    </thead>
+
+    <tbody id="gridBody"></tbody>
+  </table>
+
+  <div class="dontPrint">
+    <br><br>
+    <form action="/">
+      <input type="date" name="date">
+      <input type="submit" value="Search Date">
+    </form>
+
+    <p>Search for a term: 
+      <script>
+        const terms = REPLACE_WITH_TERMS;
+        for (let i = 0; i < terms.length; i++) {
+          document.write(`<a href="/term?term=${terms[i]}">${terms[i]}</a> `);
+        }
+      </script>
+    </p>
+
+    <p>Project available online at <a href="https://github.com/premraghvani/joint-timetable">https://github.com/premraghvani/joint-timetable</a></p>
+  </div>
+
+  <script>
+    const rawData = REPLACE_WITH_JSON_DATA;
+    
+    const people = Object.keys(rawData);
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+    const gridBody = document.getElementById("gridBody");
+
+    for (const day of days) {
+      for (let p = 0; p < people.length; p++) {
+        const person = people[p];
+        const row = document.createElement("tr");
+
+        if (p === 0) {
+          const dayCell = document.createElement("td");
+          dayCell.textContent = day;
+          dayCell.className = "day-label";
+          dayCell.rowSpan = people.length;
+          row.appendChild(dayCell);
+        }
+
+        const nameCell = document.createElement("td");
+        nameCell.textContent = person;
+        nameCell.style.fontWeight = "bold";
+
+        if (p === 0) nameCell.classList.add("day-top");
+        if (p === people.length - 1) nameCell.classList.add("day-bottom");
+        row.appendChild(nameCell);
+
+        for (let hour = 9; hour < 18; hour++) {
+          const cell = document.createElement("td");
+          cell.className = "hour-cell";
+
+          if (p === 0) cell.classList.add("day-top");
+          if (p === people.length - 1) cell.classList.add("day-bottom");
+
+          const events = rawData[person].filter((ev) => {
+            const start = new Date(ev.start);
+            const end = new Date(ev.end);
+            const dayStr = start.toLocaleDateString("en-UK", {
+              weekday: "long",
+              timeZone: "Europe/London",
+            });
+            const startHour = start.toLocaleString("en-UK", {
+              hour: "numeric",
+              hour12: false,
+              timeZone: "Europe/London",
+            });
+            const endHour = end.toLocaleString("en-UK", {
+              hour: "numeric",
+              hour12: false,
+              timeZone: "Europe/London",
+            });
+            return (
+              dayStr === day &&
+              hour >= parseInt(startHour) &&
+              hour < parseInt(endHour)
+            );
+          });
+
+          for (const ev of events) {
+            const div = document.createElement("div");
+            div.className = `event person-${p}`;
+            div.textContent = ev.summary; // NOTICE: If this doesn't work, then it may be the .summary - your iCal / ics may have better information not in .summary but something else!
+            cell.appendChild(div);
+          }
+
+          row.appendChild(cell);
+        }
+
+        gridBody.appendChild(row);
+      }
+    }
+
+  </script>
+</body>
+
+<!--My additions: print-->
+<style>
+  @media print {    
+    .dontPrint{
+      display: none !important;
+    }
+
+    .doPrint{
+      display: block !important;
+    }
+  }
+  .doPrint{
+    display: none;
+  }
+</style>
+
+</html>

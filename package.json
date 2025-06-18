@@ -9,6 +9,7 @@
   "author": "Prem Raghvani",
   "license": "ISC",
   "dependencies": {
+    "express": "^5.1.0",
     "node-ical": "^0.20.1"
   }
 }
