@@ -7,5 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Prem Raghvani",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "node-ical": "^0.20.1"
+  }
 }

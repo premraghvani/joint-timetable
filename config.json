@@ -1,5 +1,11 @@
 {
-    "calendars":{
+    "people":{
         "personOne":""
+    },
+    "terms":{
+        "michaelmas":{
+            "start":"07-10-2024",
+            "end":"13-12-2024"
+        }
     }
 }
