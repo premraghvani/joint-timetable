@@ -11,6 +11,13 @@ This project can work locally, or in AWS Lambda.
 You must have NodeJS installed. This was developed in v20.11.0, but should work in v20 or later - unsure about prior versions of node.
 You must also have npm installed.
 
+# Notice: You May Need To Change Code
+
+Because I am running this on AWS personally and not on my local computer, I needed to normalise time zones to whatever the UK time is, accounting for time zones.
+Therefore, in line 1 of `commands/termDetails.js`, I set `const timeZone = "Europe/London";` - you may need to change this.
+
+Note that this works locally on a computer in the UK time zone, or on AWS in `eu-west-2` - timezones may be screwed up if you are non-UK so please change it accordingly.
+
 # Download and Run
 
 ## Locally

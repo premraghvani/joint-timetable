@@ -1,3 +1,5 @@
+const timeZone = "Europe/London";
+
 const { timetableRetrieve } = require("../commands/timetableRetrieve");
 const fs = require("fs");
 const config = JSON.parse(fs.readFileSync("./config.json"));
@@ -96,14 +98,27 @@ function getTimeKey(event) {
   const start = new Date(event.start);
   const end = new Date(event.end);
 
-  // Use local day (0=Sunday..6=Saturday)
-  const day = start.getDay();
+  const startFormatter = new Intl.DateTimeFormat("en-GB", {
+    timeZone: timeZone,
+    weekday: "short",
+    hour: "numeric",
+    hour12: false,
+  });
 
-  // Format local time HH:MM
-  const startTime = start.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
-  const endTime = end.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
+  const endFormatter = new Intl.DateTimeFormat("en-GB", {
+    timeZone: timeZone,
+    hour: "numeric",
+    hour12: false,
+  });
 
-  return `${day} ${startTime}-${endTime}`;
+  const startParts = startFormatter.formatToParts(start);
+  const endParts = endFormatter.formatToParts(end);
+
+  const weekday = startParts.find(p => p.type === "weekday").value;
+  const startHour = startParts.find(p => p.type === "hour").value;
+  const endHour = endParts.find(p => p.type === "hour").value;
+
+  return `${weekday} ${startHour}-${endHour}`;
 }
 
 function getWeeksInPeriod(startStr, endStr) {
