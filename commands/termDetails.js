@@ -29,7 +29,7 @@ async function termDetails(term) {
         .toString()
         .replace(
             "REPLACE_WITH_JSON_DATA",
-            `JSON.parse('${JSON.stringify(simplifiedTimetable)}')`
+            `JSON.parse(\`${JSON.stringify(simplifiedTimetable)}\`)`
         )
         .replace("REPLACE_WITH_NOTICE", `Term ${term}`)
         .replace("REPLACE_WITH_TERMS", JSON.stringify(Object.keys(config.terms)));

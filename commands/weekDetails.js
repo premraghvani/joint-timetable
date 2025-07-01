@@ -11,7 +11,7 @@ async function weekDetails(dayInWeek) {
         .toString()
         .replace(
             "REPLACE_WITH_JSON_DATA",
-            `JSON.parse('${JSON.stringify(timetable)}')`
+            `JSON.parse(\`${JSON.stringify(timetable)}\`)`
         )
         .replace("REPLACE_WITH_NOTICE", `${formatUTCDate(week.start)} to ${formatUTCDate(week.end)}`)
         .replace("REPLACE_WITH_TERMS", JSON.stringify(Object.keys(config.terms)));
